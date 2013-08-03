@@ -7,7 +7,7 @@ namespace MemFS
 {
     public sealed class FileSystemNode
     {
-        public static const string Separator = "/";
+        public const string Separator = "/";
 
         public FileSystemNode(string name, FileSystemNode parent, FileSystemNode[] children)
         {
@@ -49,11 +49,11 @@ namespace MemFS
 
     public interface IFileSystem
     {
-        public FileSystemNode Root { get; }
+        FileSystemNode Root { get; }
 
-        public FileSystemNode Rename(FileSystemNode node);
-        public FileSystemNode GetNode(string path);
-        public int GetNodeSize(FileSystemNode node);
-        public byte[] GetNodeData(FileSystemNode node);
+        FileSystemNode Rename(FileSystemNode node);
+        FileSystemNode GetNode(string path);
+        int GetNodeSize(FileSystemNode node);
+        byte[] GetNodeData(FileSystemNode node);
     }
 }

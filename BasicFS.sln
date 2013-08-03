@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicFS", "BasicFS\BasicFS.csproj", "{E7139CEC-B413-4236-A225-BED8EAD4A679}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{545DFD77-1883-413A-BA94-4697966CE50C}"
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFTP", "SimpleFTP\SimpleFTP.csproj", "{3221B904-9673-4BCD-B3DC-2A3272C52679}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test2", "ConsoleApplication1\Test2.csproj", "{D05D2B9E-57A1-4043-B2DC-B20018131649}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemFS", "MemFS\MemFS\MemFS.csproj", "{753F1875-EAF5-4D64-B60F-4A7E819A16CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,16 @@ Global
 		{D05D2B9E-57A1-4043-B2DC-B20018131649}.Release|Mixed Platforms.Build.0 = Release|x86
 		{D05D2B9E-57A1-4043-B2DC-B20018131649}.Release|x86.ActiveCfg = Release|x86
 		{D05D2B9E-57A1-4043-B2DC-B20018131649}.Release|x86.Build.0 = Release|x86
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{753F1875-EAF5-4D64-B60F-4A7E819A16CF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
