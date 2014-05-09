@@ -7,8 +7,6 @@ using System.Runtime.InteropServices;
 
 namespace DataFS
 {
-    using FRP = FileRetrievalPermissions;
-
     public class DataFileSystem : IFileSystem, IDisposable
     {
         private const string RootName = "root";
@@ -286,7 +284,7 @@ namespace DataFS
             }).ToArray();
         }
 
-        public Stream GetFileStream(FileSystemNode node, FileRetrievalMode retMode, FileAccessMode accMode)
+        public Stream GetReadableStream(FileSystemNode node)
         {
             FileTableEntry entry = _fileTable.Find(delegate(FileTableEntry e)
             {
@@ -310,11 +308,6 @@ namespace DataFS
             });
 
             return entry.size;
-        }
-
-        public bool IsFileReadOnly(FileSystemNode node)
-        {
-            return true;
         }
 
         #endregion

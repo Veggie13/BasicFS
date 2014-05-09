@@ -182,16 +182,13 @@ namespace ConsoleApplication1
             {
                 string path = GetPath(filename);
                 var node = FileSystem.GetNode(path);
-                Stream stream = FileSystem.GetFileStream(node, FileRetrievalMode.Open, FileAccessMode.Read);
+                Stream stream = FileSystem.GetReadableStream(node);
                 stream.Seek(offset, SeekOrigin.Begin);
                 readBytes = (uint)stream.Read(buffer, 0, buffer.Length);
                 return 0;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine("\tException in ReadFile {0}", filename);
-                Console.WriteLine("{0}", ex.Message);
-                Console.WriteLine("{0}", ex.StackTrace);
                 return -1;
             }
         }
@@ -248,7 +245,6 @@ namespace ConsoleApplication1
             opt.MountPoint = "n:\\";
             opt.ThreadCount = 1;
 
-#if false
             {
                 CipherStream stream1 = new CipherStream(
                     new FileStream(@"C:\Corey\TestOut1.dat", FileMode.Create, FileAccess.ReadWrite),
@@ -261,8 +257,6 @@ namespace ConsoleApplication1
                 new FileStream(@"C:\Corey\TestOut1.dat", FileMode.Open, FileAccess.Read),
                 new FileStream(@"C:\Corey\TestOut2.dat", FileMode.Open, FileAccess.Read));
             var fs = new DataFileSystem(stream);
-#endif
-            var fs = new SystemFileSystem(new DirectoryInfo(@"E:\KeyClueFiles"));
 
             var proxy = new DokanFileSystemProxy();
             proxy.FileSystem = fs;

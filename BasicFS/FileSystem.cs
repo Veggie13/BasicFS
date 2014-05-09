@@ -4,34 +4,6 @@ using System.Collections.Generic;
 
 namespace BasicFS
 {
-    using FRP = FileRetrievalPermissions;
-
-    [Flags]
-    public enum FileRetrievalPermissions
-    {
-        NeedsWrite = 0x01,
-        NeedsRead = 0x02,
-        DoesAppend = (0x04 | NeedsWrite),
-        MustExist = 0x08,
-        MustNotExist = (0x10 | NeedsWrite),
-        CreatesFile = 0x20,
-        DoesTrunc = (0x40 | NeedsWrite)
-    }
-
-    public enum FileRetrievalMode
-    {
-        CreateNew = (FRP.CreatesFile | FRP.MustNotExist),
-        Create = (FRP.CreatesFile | FRP.DoesTrunc),
-        Open = (FRP.MustExist),
-        OpenOrCreate = (FRP.CreatesFile),
-        Truncate = (FRP.MustExist | FRP.DoesTrunc),
-        Append = (FRP.CreatesFile | FRP.DoesAppend)
-    }
-
-    public enum FileAccessMode
-    {
-        Read = 0x1, Write = 0x2, ReadWrite = (Read | Write)
-    }
 
     public interface IFileSystem
     {
@@ -41,11 +13,9 @@ namespace BasicFS
         FileSystemNode[] LoadChildren(FileSystemNode node);
         FileSystemNode[] LoadChildren(FileSystemNode node, int depth);
 
-        Stream GetFileStream(FileSystemNode node, FileRetrievalMode retMode, FileAccessMode accMode);
+        Stream GetReadableStream(FileSystemNode node);
 
         ulong GetFileSize(FileSystemNode node);
-
-        bool IsFileReadOnly(FileSystemNode node);
     }
 
     public class SystemFileSystem : IFileSystem
@@ -137,35 +107,13 @@ namespace BasicFS
             return childList.ToArray();
         }
 
-        public Stream GetFileStream(FileSystemNode node, FileRetrievalMode retMode, FileAccessMode accMode)
+        public Stream GetReadableStream(FileSystemNode node)
         {
             FileSystemInfo info = GetPathInfo(node.Path);
-            bool exists = (info != null && info.Exists);
-            if (retMode.hasPermission(FRP.MustExist) && !exists)
-                return null;
-            if (retMode.hasPermission(FRP.MustNotExist) && exists)
+            if (info == null || !info.Exists)
                 return null;
 
-            FileMode fMode = FileMode.Open;
-            switch (retMode)
-            {
-                case FileRetrievalMode.Open: fMode = FileMode.Open; break;
-                case FileRetrievalMode.Append: fMode = FileMode.Append; break;
-                case FileRetrievalMode.Create: fMode = FileMode.Create; break;
-                case FileRetrievalMode.CreateNew: fMode = FileMode.CreateNew; break;
-                case FileRetrievalMode.OpenOrCreate: fMode = FileMode.OpenOrCreate; break;
-                case FileRetrievalMode.Truncate: fMode = FileMode.Truncate; break;
-            }
-
-            FileAccess fAcc = FileAccess.Read;
-            switch (accMode)
-            {
-                case FileAccessMode.Read: fAcc = FileAccess.Read; break;
-                case FileAccessMode.Write: fAcc = FileAccess.Write; break;
-                case FileAccessMode.ReadWrite: fAcc = FileAccess.ReadWrite; break;
-            }
-
-            return new FileStream(info.FullName, fMode, fAcc);
+            return new FileStream(info.FullName, FileMode.Open, FileAccess.Read);
         }
 
         private ulong GetDirectorySize(DirectoryInfo info)
@@ -197,23 +145,6 @@ namespace BasicFS
             }
 
             return 0;
-        }
-
-        public bool IsFileReadOnly(FileSystemNode node)
-        {
-            FileSystemInfo info = GetPathInfo(node.Path);
-            if (info == null || !info.Exists)
-                return true;
-
-            return info.Attributes.HasFlag(FileAttributes.ReadOnly);
-        }
-    }
-
-    static class Extension
-    {
-        public static bool hasPermission(this FileRetrievalMode mode, FRP perm)
-        {
-            return (((int)mode & (int)perm) == (int)perm);
         }
     }
 }
